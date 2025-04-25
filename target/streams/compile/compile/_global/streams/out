@@ -1,0 +1,5 @@
+[0m[[0m[31merror[0m] [0m[0m/home/yxy/smallDMA/src/main/scala/DMAController/DMATop.scala:44:6: value read is not a member of chisel3.Bundle{val control: DMAController.Bus.AXI4Lite; val readMem: chisel3.Bundle; val writeSlave1: chisel3.Bundle; val writeSlave2: chisel3.Bundle; val irq: DMAController.Worker.InterruptBundle; val sync: DMAController.Worker.SyncBundle}[0m
+[0m[[0m[31merror[0m] [0m[0mdid you mean readMem?[0m
+[0m[[0m[31merror[0m] [0m[0m  io.read <> readerFrontend.io.bus[0m
+[0m[[0m[31merror[0m] [0m[0m     ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

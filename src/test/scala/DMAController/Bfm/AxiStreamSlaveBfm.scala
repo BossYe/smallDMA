@@ -1,0 +1,55 @@
+package DMAController.Bfm
+
+import DMAController.Bus._
+import chisel3.Bits
+
+import scala.collection.mutable.ListBuffer
+
+class AxiStreamSlaveBfm(val axi: AXIStream,
+                        val peek: Bits => BigInt,
+                        val poke: (Bits, BigInt) => Unit,
+                        val println: String => Unit)
+extends AxiStreamBfm {
+
+  private var rxList: ListBuffer[BigInt] = new ListBuffer()
+
+  private object State extends Enumeration {
+    type State = Value
+    val Idle, ReadData = Value
+  }
+
+  private var state = State.Idle
+
+  private var tvalid: BigInt = 0
+  private var tdata: BigInt = 0
+  private var tuser: BigInt = 0
+  private var tlast: BigInt = 0
+
+  private def peekInputs(): Unit = {
+    tvalid = peek(axi.tvalid)
+    tdata = peek(axi.tdata)
+    tuser = peek(axi.tuser)
+    tlast = peek(axi.tlast)
+  }
+
+  def update(t: Long): Unit = {
+    state match {
+      case State.Idle => {
+        poke(axi.tready, 1)
+        state = State.ReadData
+      }
+      case State.ReadData => {
+        if(tvalid != 0) {
+          rxList += tdata
+        }
+      }
+    }
+    peekInputs()
+  }
+
+  def loadFromFile(filename: String): Unit = {
+  }
+
+  def saveToFile(filename: String): Unit = {
+  }
+}

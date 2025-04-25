@@ -1,0 +1,6 @@
+[0m[[0m[31merror[0m] [0m[0m/home/yxy/smallDMA/src/test/scala/DMAController/DMAMem22Slave.scala:8:7: class DMAMem22Slave needs to be abstract.[0m
+[0m[[0m[31merror[0m] [0m[0mMissing implementation for member of class DMAFull:[0m
+[0m[[0m[31merror[0m] [0m[0m  val readeMem: DMAController.Bfm.IOBfm = ???[0m
+[0m[[0m[31merror[0m] [0m[0mclass DMAMem22Slave(dut: DMATop) extends DMAFull(dut) {[0m
+[0m[[0m[31merror[0m] [0m[0m      ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

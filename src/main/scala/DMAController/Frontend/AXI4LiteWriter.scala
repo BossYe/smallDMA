@@ -1,0 +1,95 @@
+package DMAController.Frontend
+
+import DMAController.Bus._
+import DMAController.Worker.{WorkerCSRWrapper, XferDescBundle}
+import DMAController.CSR.CSR
+import chisel3._
+import chisel3.util._
+import DMAController.DMAConfig._
+
+class AXI4LiteWriter(val addrWidth: Int, val dataWidth: Int,
+  dmaConfig: DMAConfig) extends IOBus[AXI4Lite](dmaConfig) {
+  val io = IO(new Bundle {
+    val bus = new AXI4Lite(addrWidth, dataWidth)
+
+    val dataIO = DeqIO(UInt(dataWidth.W))
+
+    val xfer = Flipped(new XferDescBundle(addrWidth))
+  })
+
+  val sDataIdle :: sDataTransfer :: sDataResp :: sDataDone :: Nil = Enum(4)
+  val sAddrIdle :: sAddrTransfer :: sAddrDone :: Nil = Enum(3)
+
+  val dataState = RegInit(sDataIdle)
+  val addrState = RegInit(sAddrIdle)
+
+  val done = RegInit(false.B)
+  val enable = RegInit(false.B)
+  val awaddr = RegInit(0.U(addrWidth.W))
+  val wstrb = WireInit(~0.U((dataWidth/8).W))
+
+
+  val awvalid = RegInit(false.B)
+  val bready = RegInit(false.B)
+
+  val ready = WireInit(io.bus.w.wready && enable)
+  val valid = WireInit(io.dataIO.valid && enable)
+
+  io.bus.aw <> AXI4LAW(awaddr, awvalid)
+  io.bus.w <> AXI4LW(io.dataIO.bits, wstrb.asUInt, valid)
+  io.bus.b <> AXI4LB(bready)
+  io.bus.ar <> AXI4LAR.tieOff(addrWidth)
+  io.bus.r <> AXI4LR.tieOff(dataWidth)
+
+  io.dataIO.ready := ready
+
+  io.xfer.done := done
+
+  switch(dataState) {
+    is(sDataIdle) {
+      done := false.B
+      when(io.xfer.valid) {
+        dataState := sDataTransfer
+        enable := true.B
+      }
+    }
+    is(sDataTransfer) {
+      when(ready && valid) {
+        dataState := sDataResp
+        enable := false.B
+        bready := true.B
+      }
+    }
+    is(sDataResp) {
+      when(bready && io.bus.b.bvalid) {
+        bready := false.B
+        dataState := sDataDone
+      }
+    }
+    is(sDataDone) {
+      done := true.B
+      dataState := sDataIdle
+    }
+  }
+
+  switch(addrState) {
+    is(sAddrIdle) {
+      when(io.xfer.valid) {
+        awaddr := io.xfer.address
+        awvalid := true.B
+        addrState := sAddrTransfer
+      }
+    }
+    is(sAddrTransfer) {
+      when(awvalid && io.bus.aw.awready) {
+        addrState := sAddrDone
+        awvalid := false.B
+      }
+    }
+    is(sAddrDone) {
+      when(done) {
+        addrState := sAddrIdle
+      }
+    }
+  }
+}
