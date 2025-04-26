@@ -1,8 +1,8 @@
-[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(DMAController.ControllerSpec, org.scalatest.tools.Framework$$anon$1@21dc4a5d, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning TaskDef(DMAController.ControllerSpec, org.scalatest.tools.Framework$$anon$1@5c4a108f, false, [SuiteSelector])[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mControllerSpec:[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mControllerSpec[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should perform 2D MM2MM transfer with stride 1 mem to 2 slaves[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 8 seconds, 219 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 9 seconds, 450 milliseconds.[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 1[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 1, aborted 0[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 1, failed 0, canceled 0, ignored 0, pending 0[0m[0m

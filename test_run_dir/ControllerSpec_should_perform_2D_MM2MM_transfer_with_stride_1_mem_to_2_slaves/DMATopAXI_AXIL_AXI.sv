@@ -869,6 +869,8 @@ end // initial
 `endif // SYNTHESIS
 endmodule
 module TransferSplitterAXI_AXIL_AXI( // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 9:7]
+  input         clock, // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 9:7]
+  input         reset, // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 9:7]
   output        io_xferIn_done, // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 12:14]
   input  [31:0] io_xferIn_address, // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 12:14]
   input  [31:0] io_xferIn_length, // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 12:14]
@@ -878,10 +880,160 @@ module TransferSplitterAXI_AXIL_AXI( // @[src/main/scala/DMAController/Worker/Tr
   output [31:0] io_xferOut_length, // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 12:14]
   output        io_xferOut_valid // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 12:14]
 );
-  assign io_xferIn_done = io_xferOut_done; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 113:16]
-  assign io_xferOut_address = io_xferIn_address; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 113:16]
-  assign io_xferOut_length = io_xferIn_length; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 113:16]
-  assign io_xferOut_valid = io_xferIn_valid; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 113:16]
+`ifdef RANDOMIZE_REG_INIT
+  reg [31:0] _RAND_0;
+  reg [31:0] _RAND_1;
+  reg [31:0] _RAND_2;
+  reg [31:0] _RAND_3;
+  reg [31:0] _RAND_4;
+  reg [31:0] _RAND_5;
+  reg [31:0] _RAND_6;
+`endif // RANDOMIZE_REG_INIT
+  reg [31:0] address_i; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 24:28]
+  reg [31:0] length_i; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 25:27]
+  reg [31:0] address_o; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 27:28]
+  reg [31:0] length_o; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 28:27]
+  reg  done; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 33:23]
+  reg  valid; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 34:24]
+  reg [1:0] state; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 36:24]
+  wire [31:0] _GEN_0 = io_xferIn_valid ? io_xferIn_address : address_i; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 49:31 50:21 24:28]
+  wire [31:0] _length_i_T_1 = length_i - 32'h8; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 65:34]
+  wire [6:0] _address_i_T = 4'h8 * 3'h4; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 66:50]
+  wire [31:0] _GEN_33 = {{25'd0}, _address_i_T}; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 66:36]
+  wire [31:0] _address_i_T_2 = address_i + _GEN_33; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 66:36]
+  wire [34:0] _address_i_T_3 = length_i * 3'h4; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 84:47]
+  wire [34:0] _GEN_34 = {{3'd0}, address_i}; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 84:36]
+  wire [34:0] _address_i_T_5 = _GEN_34 + _address_i_T_3; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 84:36]
+  wire [34:0] _GEN_6 = length_i > 32'h8 ? {{3'd0}, _address_i_T_2} : _address_i_T_5; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 62:38 66:23 84:23]
+  wire [1:0] _GEN_7 = length_i > 32'h0 ? 2'h1 : 2'h0; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 103:32 104:19 106:19]
+  wire  _GEN_8 = length_i > 32'h0 ? done : 1'h1; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 103:32 107:18 33:23]
+  wire [1:0] _GEN_9 = io_xferOut_done ? _GEN_7 : state; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 102:31 36:24]
+  wire  _GEN_10 = io_xferOut_done ? _GEN_8 : done; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 102:31 33:23]
+  wire  _GEN_11 = 2'h2 == state ? 1'h0 : valid; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 100:15 45:19 34:24]
+  wire  _GEN_17 = 2'h1 == state | _GEN_11; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 45:19 59:15]
+  wire [34:0] _GEN_21 = 2'h1 == state ? _GEN_6 : {{3'd0}, address_i}; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 45:19 24:28]
+  wire [34:0] _GEN_25 = 2'h0 == state ? {{3'd0}, _GEN_0} : _GEN_21; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 45:19]
+  wire [34:0] _GEN_35 = reset ? 35'h0 : _GEN_25; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 24:{28,28}]
+  assign io_xferIn_done = done; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 38:20]
+  assign io_xferOut_address = address_o; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 42:24]
+  assign io_xferOut_length = length_o; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 43:23]
+  assign io_xferOut_valid = valid; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 39:22]
+  always @(posedge clock) begin
+    address_i <= _GEN_35[31:0]; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 24:{28,28}]
+    if (reset) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 25:27]
+      length_i <= 32'h0; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 25:27]
+    end else if (2'h0 == state) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 45:19]
+      if (io_xferIn_valid) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 49:31]
+        length_i <= io_xferIn_length; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 51:20]
+      end
+    end else if (2'h1 == state) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 45:19]
+      if (length_i > 32'h8) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 62:38]
+        length_i <= _length_i_T_1; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 65:22]
+      end else begin
+        length_i <= 32'h0; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 83:22]
+      end
+    end
+    if (reset) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 27:28]
+      address_o <= 32'h0; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 27:28]
+    end else if (!(2'h0 == state)) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 45:19]
+      if (2'h1 == state) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 45:19]
+        address_o <= address_i; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 57:19]
+      end
+    end
+    if (reset) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 28:27]
+      length_o <= 32'h0; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 28:27]
+    end else if (!(2'h0 == state)) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 45:19]
+      if (2'h1 == state) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 45:19]
+        if (length_i > 32'h8) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 62:38]
+          length_o <= 32'h8; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 64:22]
+        end else begin
+          length_o <= length_i; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 82:22]
+        end
+      end
+    end
+    if (reset) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 33:23]
+      done <= 1'h0; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 33:23]
+    end else if (2'h0 == state) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 45:19]
+      done <= 1'h0; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 47:14]
+    end else if (!(2'h1 == state)) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 45:19]
+      if (2'h2 == state) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 45:19]
+        done <= _GEN_10;
+      end
+    end
+    if (reset) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 34:24]
+      valid <= 1'h0; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 34:24]
+    end else if (!(2'h0 == state)) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 45:19]
+      valid <= _GEN_17;
+    end
+    if (reset) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 36:24]
+      state <= 2'h0; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 36:24]
+    end else if (2'h0 == state) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 45:19]
+      if (io_xferIn_valid) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 49:31]
+        state <= 2'h1; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 53:17]
+      end
+    end else if (2'h1 == state) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 45:19]
+      state <= 2'h2; // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 60:15]
+    end else if (2'h2 == state) begin // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 45:19]
+      state <= _GEN_9;
+    end
+  end
+// Register and memory initialization
+`ifdef RANDOMIZE_GARBAGE_ASSIGN
+`define RANDOMIZE
+`endif
+`ifdef RANDOMIZE_INVALID_ASSIGN
+`define RANDOMIZE
+`endif
+`ifdef RANDOMIZE_REG_INIT
+`define RANDOMIZE
+`endif
+`ifdef RANDOMIZE_MEM_INIT
+`define RANDOMIZE
+`endif
+`ifndef RANDOM
+`define RANDOM $random
+`endif
+`ifdef RANDOMIZE_MEM_INIT
+  integer initvar;
+`endif
+`ifndef SYNTHESIS
+`ifdef FIRRTL_BEFORE_INITIAL
+`FIRRTL_BEFORE_INITIAL
+`endif
+initial begin
+  `ifdef RANDOMIZE
+    `ifdef INIT_RANDOM
+      `INIT_RANDOM
+    `endif
+    `ifndef VERILATOR
+      `ifdef RANDOMIZE_DELAY
+        #`RANDOMIZE_DELAY begin end
+      `else
+        #0.002 begin end
+      `endif
+    `endif
+`ifdef RANDOMIZE_REG_INIT
+  _RAND_0 = {1{`RANDOM}};
+  address_i = _RAND_0[31:0];
+  _RAND_1 = {1{`RANDOM}};
+  length_i = _RAND_1[31:0];
+  _RAND_2 = {1{`RANDOM}};
+  address_o = _RAND_2[31:0];
+  _RAND_3 = {1{`RANDOM}};
+  length_o = _RAND_3[31:0];
+  _RAND_4 = {1{`RANDOM}};
+  done = _RAND_4[0:0];
+  _RAND_5 = {1{`RANDOM}};
+  valid = _RAND_5[0:0];
+  _RAND_6 = {1{`RANDOM}};
+  state = _RAND_6[1:0];
+`endif // RANDOMIZE_REG_INIT
+  `endif // RANDOMIZE
+end // initial
+`ifdef FIRRTL_AFTER_INITIAL
+`FIRRTL_AFTER_INITIAL
+`endif
+`endif // SYNTHESIS
 endmodule
 module TransferSplitterAXI_AXIL_AXI_1( // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 9:7]
   input         clock, // @[src/main/scala/DMAController/Worker/TransferSplitter.scala 9:7]
@@ -1547,6 +1699,8 @@ module WorkerCSRWrapperAXI_AXIL_AXI( // @[src/main/scala/DMAController/Worker/Wo
   wire [31:0] addressGeneratorRead_io_xfer_address; // @[src/main/scala/DMAController/Worker/WorkerCSRWrapper.scala 18:36]
   wire [31:0] addressGeneratorRead_io_xfer_length; // @[src/main/scala/DMAController/Worker/WorkerCSRWrapper.scala 18:36]
   wire  addressGeneratorRead_io_xfer_valid; // @[src/main/scala/DMAController/Worker/WorkerCSRWrapper.scala 18:36]
+  wire  transferSplitterRead_clock; // @[src/main/scala/DMAController/Worker/WorkerCSRWrapper.scala 19:36]
+  wire  transferSplitterRead_reset; // @[src/main/scala/DMAController/Worker/WorkerCSRWrapper.scala 19:36]
   wire  transferSplitterRead_io_xferIn_done; // @[src/main/scala/DMAController/Worker/WorkerCSRWrapper.scala 19:36]
   wire [31:0] transferSplitterRead_io_xferIn_address; // @[src/main/scala/DMAController/Worker/WorkerCSRWrapper.scala 19:36]
   wire [31:0] transferSplitterRead_io_xferIn_length; // @[src/main/scala/DMAController/Worker/WorkerCSRWrapper.scala 19:36]
@@ -1692,6 +1846,8 @@ module WorkerCSRWrapperAXI_AXIL_AXI( // @[src/main/scala/DMAController/Worker/Wo
     .io_xfer_valid(addressGeneratorRead_io_xfer_valid)
   );
   TransferSplitterAXI_AXIL_AXI transferSplitterRead ( // @[src/main/scala/DMAController/Worker/WorkerCSRWrapper.scala 19:36]
+    .clock(transferSplitterRead_clock),
+    .reset(transferSplitterRead_reset),
     .io_xferIn_done(transferSplitterRead_io_xferIn_done),
     .io_xferIn_address(transferSplitterRead_io_xferIn_address),
     .io_xferIn_length(transferSplitterRead_io_xferIn_length),
@@ -1877,6 +2033,8 @@ module WorkerCSRWrapperAXI_AXIL_AXI( // @[src/main/scala/DMAController/Worker/Wo
   assign addressGeneratorRead_io_ctl_lineCount = addressGeneratorRead_io_ctl_lineCount_csr_io_value; // @[src/main/scala/DMAController/Worker/WorkerCSRWrapper.scala 60:41]
   assign addressGeneratorRead_io_ctl_lineGap = addressGeneratorRead_io_ctl_lineGap_csr_io_value; // @[src/main/scala/DMAController/Worker/WorkerCSRWrapper.scala 61:39]
   assign addressGeneratorRead_io_xfer_done = transferSplitterRead_io_xferIn_done; // @[src/main/scala/DMAController/Worker/WorkerCSRWrapper.scala 76:34]
+  assign transferSplitterRead_clock = clock;
+  assign transferSplitterRead_reset = reset;
   assign transferSplitterRead_io_xferIn_address = addressGeneratorRead_io_xfer_address; // @[src/main/scala/DMAController/Worker/WorkerCSRWrapper.scala 76:34]
   assign transferSplitterRead_io_xferIn_length = addressGeneratorRead_io_xfer_length; // @[src/main/scala/DMAController/Worker/WorkerCSRWrapper.scala 76:34]
   assign transferSplitterRead_io_xferIn_valid = addressGeneratorRead_io_xfer_valid; // @[src/main/scala/DMAController/Worker/WorkerCSRWrapper.scala 76:34]

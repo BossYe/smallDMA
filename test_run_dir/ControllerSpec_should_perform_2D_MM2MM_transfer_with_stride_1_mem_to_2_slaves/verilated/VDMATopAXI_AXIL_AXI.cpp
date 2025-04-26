@@ -31,7 +31,7 @@ void VDMATopAXI_AXIL_AXI::eval_step() {
             Verilated::debug(1);
             __Vchange = _change_request(vlSymsp);
             Verilated::debug(__Vsaved_debug);
-            VL_FATAL_MT("DMATopAXI_AXIL_AXI.sv", 2153, "",
+            VL_FATAL_MT("DMATopAXI_AXIL_AXI.sv", 2311, "",
                 "Verilated model didn't converge\n"
                 "- See DIDNOTCONVERGE in the Verilator manual");
         } else {
@@ -57,7 +57,7 @@ void VDMATopAXI_AXIL_AXI::_eval_initial_loop(VDMATopAXI_AXIL_AXI__Syms* __restri
             Verilated::debug(1);
             __Vchange = _change_request(vlSymsp);
             Verilated::debug(__Vsaved_debug);
-            VL_FATAL_MT("DMATopAXI_AXIL_AXI.sv", 2153, "",
+            VL_FATAL_MT("DMATopAXI_AXIL_AXI.sv", 2311, "",
                 "Verilated model didn't DC converge\n"
                 "- See DIDNOTCONVERGE in the Verilator manual");
         } else {
@@ -78,10 +78,12 @@ VL_INLINE_OPT void VDMATopAXI_AXIL_AXI::_sequent__TOP__2(VDMATopAXI_AXIL_AXI__Sy
     CData/*0:0*/ __Vdly__DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__awvalid;
     CData/*1:0*/ __Vdly__DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__dataState;
     CData/*1:0*/ __Vdly__DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__state;
+    CData/*1:0*/ __Vdly__DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state;
     CData/*1:0*/ __Vdly__DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT__state;
     CData/*1:0*/ __Vdly__DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT__state;
     CData/*0:0*/ __Vdlyvset__DMATopAXI_AXIL_AXI__DOT__queue_q__DOT__ram__v0;
     SData/*8:0*/ __Vdlyvdim0__DMATopAXI_AXIL_AXI__DOT__queue_q__DOT__ram__v0;
+    IData/*31:0*/ __Vdly__DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i;
     IData/*31:0*/ __Vdly__DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT__length_i;
     IData/*31:0*/ __Vdlyvval__DMATopAXI_AXIL_AXI__DOT__queue_q__DOT__ram__v0;
     // Body
@@ -98,12 +100,16 @@ VL_INLINE_OPT void VDMATopAXI_AXIL_AXI::_sequent__TOP__2(VDMATopAXI_AXIL_AXI__Sy
         = vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT__state;
     __Vdly__DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT__length_i 
         = vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT__length_i;
+    __Vdly__DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state 
+        = vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state;
+    __Vdly__DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i 
+        = vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i;
+    __Vdly__DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__dataState 
+        = vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__dataState;
     __Vdly__DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arvalid 
         = vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arvalid;
     __Vdly__DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state 
         = vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state;
-    __Vdly__DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__dataState 
-        = vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__dataState;
     __Vdly__DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__addrState 
         = vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__addrState;
     __Vdly__DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__awvalid 
@@ -203,81 +209,6 @@ VL_INLINE_OPT void VDMATopAXI_AXIL_AXI::_sequent__TOP__2(VDMATopAXI_AXIL_AXI__Sy
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__csr__DOT__reg_ 
         = vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__status;
     if (vlTOPp->reset) {
-        __Vdly__DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state = 0U;
-    } else {
-        if ((0U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))) {
-            if (vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__valid) {
-                __Vdly__DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state = 1U;
-            }
-        } else {
-            if ((1U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))) {
-                if (((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arvalid) 
-                     & (IData)(vlTOPp->io_readMem_ar_arready))) {
-                    __Vdly__DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state = 2U;
-                }
-            } else {
-                __Vdly__DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state 
-                    = ((2U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))
-                        ? (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_9)
-                        : (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_12));
-            }
-        }
-    }
-    if (vlTOPp->reset) {
-        vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__done = 0U;
-    } else {
-        if ((0U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))) {
-            vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__done = 0U;
-        } else {
-            if ((1U != (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))) {
-                if ((2U != (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))) {
-                    vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__done 
-                        = vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_11;
-                }
-            }
-        }
-    }
-    if (vlTOPp->reset) {
-        vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__enable = 0U;
-    } else {
-        if ((0U != (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))) {
-            if ((1U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))) {
-                vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__enable 
-                    = vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_6;
-            } else {
-                if ((2U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))) {
-                    vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__enable 
-                        = vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_10;
-                }
-            }
-        }
-    }
-    if (vlTOPp->reset) {
-        vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__araddr = 0U;
-    } else {
-        if ((0U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))) {
-            if (vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__valid) {
-                vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__araddr 
-                    = vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__address_o;
-            }
-        }
-    }
-    if (vlTOPp->reset) {
-        __Vdly__DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arvalid = 0U;
-    } else {
-        if ((0U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))) {
-            __Vdly__DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arvalid 
-                = vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_1;
-        } else {
-            if ((1U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))) {
-                if (((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arvalid) 
-                     & (IData)(vlTOPp->io_readMem_ar_arready))) {
-                    __Vdly__DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arvalid = 0U;
-                }
-            }
-        }
-    }
-    if (vlTOPp->reset) {
         __Vdly__DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__dataState = 0U;
     } else {
         if ((0U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__dataState))) {
@@ -366,6 +297,81 @@ VL_INLINE_OPT void VDMATopAXI_AXIL_AXI::_sequent__TOP__2(VDMATopAXI_AXIL_AXI__Sy
         }
     }
     if (vlTOPp->reset) {
+        __Vdly__DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state = 0U;
+    } else {
+        if ((0U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))) {
+            if (vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__valid) {
+                __Vdly__DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state = 1U;
+            }
+        } else {
+            if ((1U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))) {
+                if (((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arvalid) 
+                     & (IData)(vlTOPp->io_readMem_ar_arready))) {
+                    __Vdly__DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state = 2U;
+                }
+            } else {
+                __Vdly__DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state 
+                    = ((2U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))
+                        ? (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_9)
+                        : (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_12));
+            }
+        }
+    }
+    if (vlTOPp->reset) {
+        vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__done = 0U;
+    } else {
+        if ((0U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))) {
+            vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__done = 0U;
+        } else {
+            if ((1U != (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))) {
+                if ((2U != (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))) {
+                    vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__done 
+                        = vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_11;
+                }
+            }
+        }
+    }
+    if (vlTOPp->reset) {
+        vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__enable = 0U;
+    } else {
+        if ((0U != (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))) {
+            if ((1U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))) {
+                vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__enable 
+                    = vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_6;
+            } else {
+                if ((2U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))) {
+                    vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__enable 
+                        = vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_10;
+                }
+            }
+        }
+    }
+    if (vlTOPp->reset) {
+        vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__araddr = 0U;
+    } else {
+        if ((0U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))) {
+            if (vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__valid) {
+                vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__araddr 
+                    = vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__address_o;
+            }
+        }
+    }
+    if (vlTOPp->reset) {
+        __Vdly__DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arvalid = 0U;
+    } else {
+        if ((0U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))) {
+            __Vdly__DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arvalid 
+                = vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_1;
+        } else {
+            if ((1U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))) {
+                if (((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arvalid) 
+                     & (IData)(vlTOPp->io_readMem_ar_arready))) {
+                    __Vdly__DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arvalid = 0U;
+                }
+            }
+        }
+    }
+    if (vlTOPp->reset) {
         __Vdly__DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__addrState = 0U;
     } else {
         if ((0U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__addrState))) {
@@ -426,12 +432,12 @@ VL_INLINE_OPT void VDMATopAXI_AXIL_AXI::_sequent__TOP__2(VDMATopAXI_AXIL_AXI__Sy
         vlTOPp->DMATopAXI_AXIL_AXI__DOT__queue_q__DOT__ram[__Vdlyvdim0__DMATopAXI_AXIL_AXI__DOT__queue_q__DOT__ram__v0] 
             = __Vdlyvval__DMATopAXI_AXIL_AXI__DOT__queue_q__DOT__ram__v0;
     }
+    vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__dataState 
+        = __Vdly__DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__dataState;
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arvalid 
         = __Vdly__DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arvalid;
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state 
         = __Vdly__DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state;
-    vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__dataState 
-        = __Vdly__DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__dataState;
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__addrState 
         = __Vdly__DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__addrState;
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__awvalid 
@@ -474,14 +480,6 @@ VL_INLINE_OPT void VDMATopAXI_AXIL_AXI::_sequent__TOP__2(VDMATopAXI_AXIL_AXI__Sy
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__status 
         = (((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__busy) 
             << 1U) | (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT__busy));
-    vlTOPp->io_readMem_ar_araddr = vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__araddr;
-    vlTOPp->io_readMem_ar_arvalid = vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arvalid;
-    vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_12 
-        = ((3U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))
-            ? 0U : (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state));
-    vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_11 
-        = ((3U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state)) 
-           | (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__done));
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT___GEN_14 
         = ((3U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__dataState))
             ? 0U : (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__dataState));
@@ -509,6 +507,92 @@ VL_INLINE_OPT void VDMATopAXI_AXIL_AXI::_sequent__TOP__2(VDMATopAXI_AXIL_AXI__Sy
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT___GEN_5 
         = ((1U < vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__length) 
            & (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__enable));
+    vlTOPp->io_readMem_ar_araddr = vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__araddr;
+    vlTOPp->io_readMem_ar_arvalid = vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arvalid;
+    vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_12 
+        = ((3U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))
+            ? 0U : (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state));
+    vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_11 
+        = ((3U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state)) 
+           | (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__done));
+    if (vlTOPp->reset) {
+        __Vdly__DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i = 0U;
+    } else {
+        if ((0U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state))) {
+            if (vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__valid) {
+                __Vdly__DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i 
+                    = vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__length_o;
+            }
+        } else {
+            if ((1U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state))) {
+                __Vdly__DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i 
+                    = ((8U < vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i)
+                        ? vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___length_i_T_1
+                        : 0U);
+            }
+        }
+    }
+    if (vlTOPp->reset) {
+        vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__address_o = 0U;
+    } else {
+        if ((0U != (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state))) {
+            if ((1U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state))) {
+                vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__address_o 
+                    = vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__address_i;
+            }
+        }
+    }
+    if (vlTOPp->reset) {
+        vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_o = 0U;
+    } else {
+        if ((0U != (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state))) {
+            if ((1U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state))) {
+                vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_o 
+                    = ((8U < vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i)
+                        ? 8U : vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i);
+            }
+        }
+    }
+    if (vlTOPp->reset) {
+        vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__done = 0U;
+    } else {
+        if ((0U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state))) {
+            vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__done = 0U;
+        } else {
+            if ((1U != (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state))) {
+                if ((2U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state))) {
+                    vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__done 
+                        = vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_10;
+                }
+            }
+        }
+    }
+    if (vlTOPp->reset) {
+        vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__valid = 0U;
+    } else {
+        if ((0U != (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state))) {
+            vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__valid 
+                = vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_17;
+        }
+    }
+    if (vlTOPp->reset) {
+        __Vdly__DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state = 0U;
+    } else {
+        if ((0U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state))) {
+            if (vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__valid) {
+                __Vdly__DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state = 1U;
+            }
+        } else {
+            if ((1U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state))) {
+                __Vdly__DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state = 2U;
+            } else {
+                if ((2U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state))) {
+                    __Vdly__DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state 
+                        = vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_9;
+                }
+            }
+        }
+    }
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT___GEN_34 
         = ((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__done)
             ? 0U : (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__addrState));
@@ -601,6 +685,10 @@ VL_INLINE_OPT void VDMATopAXI_AXIL_AXI::_sequent__TOP__2(VDMATopAXI_AXIL_AXI__Sy
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__io_irq_irqc__DOT__isr_csr__DOT___reg_T_3 
         = (vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__io_irq_irqc__DOT__isr_csr__DOT__reg_ 
            | (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__io_irq_irqc__DOT__irq));
+    vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state 
+        = __Vdly__DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state;
+    vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i 
+        = __Vdly__DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i;
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT__state 
         = __Vdly__DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT__state;
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT__length_i 
@@ -610,6 +698,31 @@ VL_INLINE_OPT void VDMATopAXI_AXIL_AXI::_sequent__TOP__2(VDMATopAXI_AXIL_AXI__Sy
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__queue_q__DOT__ptr_match 
         = ((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__queue_q__DOT__enq_ptr_value) 
            == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__queue_q__DOT__deq_ptr_value));
+    vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_1 
+        = ((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__valid) 
+           | (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arvalid));
+    vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_17 
+        = ((1U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state)) 
+           | ((2U != (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state)) 
+              & (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__valid)));
+    vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___length_i_T_1 
+        = (vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i 
+           - (IData)(8U));
+    if (vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__done) {
+        vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_9 
+            = ((0U < vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i)
+                ? 1U : 0U);
+        vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_10 
+            = ((0U >= vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i) 
+               | (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__done));
+    } else {
+        vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_9 
+            = vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state;
+        vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_10 
+            = vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__done;
+    }
+    vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__address_i 
+        = (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_35);
     if (vlTOPp->reset) {
         __Vdly__DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__state = 0U;
     } else {
@@ -825,15 +938,12 @@ VL_INLINE_OPT void VDMATopAXI_AXIL_AXI::_sequent__TOP__2(VDMATopAXI_AXIL_AXI__Sy
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT___lineCount_T_1 
         = (vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__lineCount 
            - (IData)(1U));
-    vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_1 
-        = ((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__valid) 
-           | (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arvalid));
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT___GEN_12 
         = ((1U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__state)) 
            | ((2U != (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__state)) 
               & (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__valid)));
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT___GEN_8 
-        = ((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__done)
+        = ((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__done)
             ? ((0U < vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__lineCount)
                 ? 1U : 0U) : (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__state));
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__address_i 
@@ -1086,12 +1196,6 @@ VL_INLINE_OPT void VDMATopAXI_AXIL_AXI::_combo__TOP__4(VDMATopAXI_AXIL_AXI__Syms
     VL_DEBUG_IF(VL_DBG_MSGF("+    VDMATopAXI_AXIL_AXI::_combo__TOP__4\n"); );
     VDMATopAXI_AXIL_AXI* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Body
-    vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_6 
-        = (((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arvalid) 
-            & (IData)(vlTOPp->io_readMem_ar_arready)) 
-           | (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__enable));
-    vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__valid 
-        = ((IData)(vlTOPp->io_readMem_r_rvalid) & (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__enable));
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT___GEN_11 
         = ((~ ((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__bready) 
                & (IData)(vlTOPp->io_writeSlave2_b_bvalid))) 
@@ -1103,22 +1207,44 @@ VL_INLINE_OPT void VDMATopAXI_AXIL_AXI::_combo__TOP__4(VDMATopAXI_AXIL_AXI__Syms
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__ready 
         = ((IData)(vlTOPp->io_writeSlave2_w_wready) 
            & (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__enable));
+    vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_6 
+        = (((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arvalid) 
+            & (IData)(vlTOPp->io_readMem_ar_arready)) 
+           | (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__enable));
+    vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__valid 
+        = ((IData)(vlTOPp->io_readMem_r_rvalid) & (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__enable));
+    vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_26 
+        = ((IData)(vlTOPp->reset) ? 0U : ((0U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))
+                                           ? ((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__valid)
+                                               ? (vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_o 
+                                                  - (IData)(1U))
+                                               : (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arlen))
+                                           : (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arlen)));
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__queue_q__DOT__do_deq 
         = (((IData)(vlTOPp->io_writeSlave2_w_wready) 
             & (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__enable)) 
            & (~ (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__queue_q__DOT__empty)));
     if (vlTOPp->reset) {
-        vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_26 = 0U;
+        vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_35 = 0ULL;
         vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT___GEN_35 = 0ULL;
         vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT___GEN_29 = 0ULL;
         vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT___GEN_29 = 0ULL;
     } else {
-        vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_26 
-            = ((0U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))
-                ? ((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__valid)
-                    ? (vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__length_o 
-                       - (IData)(1U)) : (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arlen))
-                : (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arlen));
+        vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_35 
+            = (0x7ffffffffULL & ((0U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state))
+                                  ? (QData)((IData)(
+                                                    ((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__valid)
+                                                      ? vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__address_o
+                                                      : vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__address_i)))
+                                  : ((1U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state))
+                                      ? ((8U < vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i)
+                                          ? (QData)((IData)(
+                                                            ((IData)(0x20U) 
+                                                             + vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__address_i)))
+                                          : ((QData)((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__address_i)) 
+                                             + ((QData)((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i)) 
+                                                << 2U)))
+                                      : (QData)((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__address_i)))));
         vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT___GEN_35 
             = (0x7ffffffffULL & ((0U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT__state))
                                   ? (QData)((IData)(

@@ -226,12 +226,18 @@ VL_MODULE(VDMATopAXI_AXIL_AXI) {
         CData/*0:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__busy;
         CData/*1:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT___GEN_8;
         CData/*0:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT___GEN_12;
+        CData/*0:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__done;
+        CData/*0:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__valid;
+        CData/*1:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state;
+        CData/*1:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_9;
+    };
+    struct {
+        CData/*0:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_10;
+        CData/*0:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_17;
         CData/*1:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT__state;
         CData/*0:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT__valid;
         CData/*0:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT__busy;
         CData/*1:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT___GEN_8;
-    };
-    struct {
         CData/*0:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT___GEN_12;
         CData/*0:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT__done;
         CData/*0:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT__valid;
@@ -271,6 +277,11 @@ VL_MODULE(VDMATopAXI_AXIL_AXI) {
         IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__length_o;
         IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__length_i;
         IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT___lineCount_T_1;
+        IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__address_i;
+        IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i;
+        IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__address_o;
+        IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_o;
+        IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___length_i_T_1;
         IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT__lineCount;
         IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT__lineGap;
         IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT__address_o;
@@ -285,6 +296,8 @@ VL_MODULE(VDMATopAXI_AXIL_AXI) {
         IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT___length_i_T_1;
         IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__control_csr__DOT__reg_;
         IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__control_csr__DOT___reg_T_1;
+    };
+    struct {
         IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__csr__DOT__reg_;
         IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__io_irq_irqc__DOT__mask_csr__DOT__reg_;
         IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__io_irq_irqc__DOT__isr_csr__DOT__reg_;
@@ -296,8 +309,6 @@ VL_MODULE(VDMATopAXI_AXIL_AXI) {
         IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead_io_ctl_lineGap_csr__DOT__reg_;
         IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite_io_ctl_startAddress_csr__DOT__reg_;
         IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite_io_ctl_lineLength_csr__DOT__reg_;
-    };
-    struct {
         IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite_io_ctl_lineCount_csr__DOT__reg_;
         IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite_io_ctl_lineGap_csr__DOT__reg_;
         IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__csr_1__DOT__reg_;
@@ -306,6 +317,7 @@ VL_MODULE(VDMATopAXI_AXIL_AXI) {
         IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__csr_4__DOT__reg_;
         IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__queue_q__DOT__ram_io_deq_bits_MPORT_data;
         QData/*34:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT___GEN_29;
+        QData/*34:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_35;
         QData/*34:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT___GEN_29;
         QData/*34:0*/ DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT___GEN_35;
         IData/*31:0*/ DMATopAXI_AXIL_AXI__DOT__queue_q__DOT__ram[512];

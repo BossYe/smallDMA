@@ -211,21 +211,44 @@ void VDMATopAXI_AXIL_AXI::_settle__TOP__3(VDMATopAXI_AXIL_AXI__Syms* __restrict 
             << 1U) | (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__io_irq_irqc__DOT__writeBusyIrq));
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__valid 
         = ((IData)(vlTOPp->io_readMem_r_rvalid) & (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__enable));
+    vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___length_i_T_1 
+        = (vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i 
+           - (IData)(8U));
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT___length_i_T_1 
         = (vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT__length_i 
            - (IData)(0x10U));
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__queue_q__DOT___value_T_1 
         = (0x1ffU & ((IData)(1U) + (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__queue_q__DOT__enq_ptr_value)));
+    vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_1 
+        = ((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__valid) 
+           | (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arvalid));
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT___GEN_2 
         = ((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT__valid) 
            | (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__enable));
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT___GEN_30 
         = ((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT__valid) 
            | (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__awvalid));
+    vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_17 
+        = ((1U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state)) 
+           | ((2U != (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state)) 
+              & (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__valid)));
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT___GEN_17 
         = ((1U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT__state)) 
            | ((2U != (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT__state)) 
               & (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT__valid)));
+    if (vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__done) {
+        vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_9 
+            = ((0U < vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i)
+                ? 1U : 0U);
+        vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_10 
+            = ((0U >= vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i) 
+               | (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__done));
+    } else {
+        vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_9 
+            = vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state;
+        vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_10 
+            = vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__done;
+    }
     if (vlTOPp->DMATopAXI_AXIL_AXI__DOT__writerFrontend__DOT__done) {
         vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT___GEN_9 
             = ((0U < vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT__length_i)
@@ -239,6 +262,13 @@ void VDMATopAXI_AXIL_AXI::_settle__TOP__3(VDMATopAXI_AXIL_AXI__Syms* __restrict 
         vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT___GEN_10 
             = vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT__done;
     }
+    vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_26 
+        = ((IData)(vlTOPp->reset) ? 0U : ((0U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))
+                                           ? ((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__valid)
+                                               ? (vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_o 
+                                                  - (IData)(1U))
+                                               : (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arlen))
+                                           : (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arlen)));
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__queue_q__DOT__ptr_match 
         = ((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__queue_q__DOT__enq_ptr_value) 
            == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__queue_q__DOT__deq_ptr_value));
@@ -248,9 +278,6 @@ void VDMATopAXI_AXIL_AXI::_settle__TOP__3(VDMATopAXI_AXIL_AXI__Syms* __restrict 
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT___lineCount_T_1 
         = (vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT__lineCount 
            - (IData)(1U));
-    vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_1 
-        = ((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__valid) 
-           | (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arvalid));
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT___GEN_12 
         = ((1U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__state)) 
            | ((2U != (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__state)) 
@@ -260,7 +287,7 @@ void VDMATopAXI_AXIL_AXI::_settle__TOP__3(VDMATopAXI_AXIL_AXI__Syms* __restrict 
            | ((2U != (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT__state)) 
               & (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT__valid)));
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT___GEN_8 
-        = ((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__done)
+        = ((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__done)
             ? ((0U < vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__lineCount)
                 ? 1U : 0U) : (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__state));
     vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT___GEN_8 
@@ -268,17 +295,26 @@ void VDMATopAXI_AXIL_AXI::_settle__TOP__3(VDMATopAXI_AXIL_AXI__Syms* __restrict 
             ? ((0U < vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT__lineCount)
                 ? 1U : 0U) : (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT__state));
     if (vlTOPp->reset) {
-        vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_26 = 0U;
+        vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_35 = 0ULL;
         vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT___GEN_35 = 0ULL;
         vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT___GEN_29 = 0ULL;
         vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT___GEN_29 = 0ULL;
     } else {
-        vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT___GEN_26 
-            = ((0U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__state))
-                ? ((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__valid)
-                    ? (vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__length_o 
-                       - (IData)(1U)) : (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arlen))
-                : (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__readerFrontend__DOT__arlen));
+        vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_35 
+            = (0x7ffffffffULL & ((0U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state))
+                                  ? (QData)((IData)(
+                                                    ((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__valid)
+                                                      ? vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT__address_o
+                                                      : vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__address_i)))
+                                  : ((1U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state))
+                                      ? ((8U < vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i)
+                                          ? (QData)((IData)(
+                                                            ((IData)(0x20U) 
+                                                             + vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__address_i)))
+                                          : ((QData)((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__address_i)) 
+                                             + ((QData)((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i)) 
+                                                << 2U)))
+                                      : (QData)((IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__address_i)))));
         vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT___GEN_35 
             = (0x7ffffffffULL & ((0U == (IData)(vlTOPp->DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterWrite__DOT__state))
                                   ? (QData)((IData)(
@@ -752,6 +788,18 @@ void VDMATopAXI_AXIL_AXI::_ctor_var_reset() {
     DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT___GEN_8 = VL_RAND_RESET_I(2);
     DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT___GEN_12 = VL_RAND_RESET_I(1);
     DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorRead__DOT___GEN_29 = VL_RAND_RESET_Q(35);
+    DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__address_i = VL_RAND_RESET_I(32);
+    DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_i = VL_RAND_RESET_I(32);
+    DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__address_o = VL_RAND_RESET_I(32);
+    DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__length_o = VL_RAND_RESET_I(32);
+    DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__done = VL_RAND_RESET_I(1);
+    DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__valid = VL_RAND_RESET_I(1);
+    DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT__state = VL_RAND_RESET_I(2);
+    DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___length_i_T_1 = VL_RAND_RESET_I(32);
+    DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_9 = VL_RAND_RESET_I(2);
+    DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_10 = VL_RAND_RESET_I(1);
+    DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_17 = VL_RAND_RESET_I(1);
+    DMATopAXI_AXIL_AXI__DOT__ctl__DOT__transferSplitterRead__DOT___GEN_35 = VL_RAND_RESET_Q(35);
     DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT__state = VL_RAND_RESET_I(2);
     DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT__lineCount = VL_RAND_RESET_I(32);
     DMATopAXI_AXIL_AXI__DOT__ctl__DOT__addressGeneratorWrite__DOT__lineGap = VL_RAND_RESET_I(32);
